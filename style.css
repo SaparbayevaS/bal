@@ -79,7 +79,7 @@ body {
     touch-action: pan-y;
 }
 
-/* Белая подложка, которая перемещается вместе с пальцем */
+/* Белая подложка, которая перемещается при свайпе */
 .tab-indicator {
     position: absolute;
     top: 4px;
@@ -188,7 +188,7 @@ body {
     line-height: 1.5;
 }
 
-/* Чёрный текст и кнопка копирования */
+/* Строка с текстом и декоративным значком */
 .black-row {
     display: flex;
     align-items: center;
@@ -208,21 +208,25 @@ body {
     -webkit-user-select: text;
 }
 
-/* Кнопка копирования */
-.copy-button {
+/* Просто рисунок из двух квадратиков */
+.copy-icon {
+    display: flex;
     flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
     width: 36px;
     height: 36px;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    background: #fafafa;
-    color: #333;
-    font-size: 23px;
-    cursor: pointer;
+    color: #777;
 }
 
-.copy-button:active {
-    background: #eaeaea;
+.copy-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 /* Маленькие экраны */

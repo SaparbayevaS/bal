@@ -50,7 +50,7 @@ backButton.addEventListener("click", () => {
     showPage(Math.max(0, currentPage - 1));
 });
 
-/* Перетаскивание страниц пальцем */
+/* Перетягивание страницы пальцем */
 pagesContainer.addEventListener("touchstart", (event) => {
     if (!event.touches.length) return;
 
@@ -113,9 +113,9 @@ pagesContainer.addEventListener("touchmove", (event) => {
         }
     });
 
-    // Белая подложка движется вслед за пальцем
+    // Белая подложка двигается вслед за пальцем
     moveIndicator(currentPage, diffX / 2, false);
-}, { passive: false });
+});
 
 function finishSwipe() {
     if (!isDragging) return;
@@ -140,41 +140,5 @@ function finishSwipe() {
 pagesContainer.addEventListener("touchend", finishSwipe);
 pagesContainer.addEventListener("touchcancel", finishSwipe);
 
-/* Копирование чёрного текста */
-document.querySelectorAll(".copy-button").forEach((button) => {
-    button.addEventListener("click", async () => {
-        const text = button
-            .closest(".black-row")
-            .querySelector(".black-text")
-            .textContent
-            .trim();
-
-        try {
-            await navigator.clipboard.writeText(text);
-            button.textContent = "✓";
-        } catch {
-            const field = document.createElement("textarea");
-            field.value = text;
-            field.style.position = "fixed";
-            field.style.opacity = "0";
-            document.body.appendChild(field);
-            field.select();
-
-            try {
-                document.execCommand("copy");
-                button.textContent = "✓";
-            } catch {
-                button.textContent = "!";
-            }
-
-            field.remove();
-        }
-
-        setTimeout(() => {
-            button.textContent = "▢";
-        }, 1200);
-    });
-});
-
-/* Начальное положение белой подложки */
+/* Значок квадратиков декоративный: копирование не выполняется */
 moveIndicator(currentPage);
