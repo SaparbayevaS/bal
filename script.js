@@ -1,4 +1,3 @@
-
 const tabs = document.querySelectorAll(".tab");
 const pages = document.querySelectorAll(".page");
 const backButton = document.querySelector("#backButton");
@@ -84,4 +83,3 @@ document.querySelectorAll(".copy-button").forEach((button) => {
         }, 1200);
     });
 });
-
