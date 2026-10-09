@@ -20,98 +20,117 @@
         <div class="tabs-row">
             <div class="tab-switch">
                 <span class="tab-indicator"></span>
-                <button class="tab active" data-page="0">Бла бла бла 1111</button>
+                <button class="tab active" data-page="0">Бла бла бла 1</button>
                 <button class="tab" data-page="1">Бла бла бла 2</button>
             </div>
         </div>
     </header>
 
     <main class="pages">
+        <!-- Первая вкладка -->
         <section class="page active">
-            <div class="photo-container">
-                <img src="" alt="" id="photo1">
+            <div class="photo-page">
+                <div class="photo-frame" id="photoFrame">
+                    <img src="" alt="Выбранное фото" id="photo1">
+                    <span class="photo-hint" id="photoHint">Выбери фото из галереи</span>
+                </div>
+
+                <label class="photo-picker">
+                    Выбрать фото
+                    <input type="file" id="photoInput" accept="image/*">
+                </label>
+
+                <div class="photo-text-fields">
+                    <textarea class="outlined-field" placeholder="Текст под фото"></textarea>
+                    <textarea class="outlined-field" placeholder="Ещё текст под фото"></textarea>
+                </div>
             </div>
         </section>
 
+        <!-- Вторая вкладка -->
         <section class="page">
-            <div class="text-list">
-                <article class="text-card">
-                    <p class="gray-text">шото шото</p>
-                    <div class="black-row">
-                        <p class="black-text">шото шото</p>
-                        <span class="copy-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </article>
+            <div class="text-page">
+                <div class="text-list">
+                    <article class="text-card">
+                        <p class="gray-text">шото шото</p>
+                        <div class="black-row">
+                            <p class="black-text">шото шото</p>
+                            <span class="copy-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </article>
 
-                <article class="text-card">
-                    <p class="gray-text">шото шото</p>
-                    <div class="black-row">
-                        <p class="black-text">шото шото</p>
-                        <span class="copy-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </article>
+                    <article class="text-card">
+                        <p class="gray-text">шото шото</p>
+                        <div class="black-row">
+                            <p class="black-text">шото шото</p>
+                            <span class="copy-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </article>
 
-                <article class="text-card">
-                    <p class="gray-text">шото шото</p>
-                    <div class="black-row">
-                        <p class="black-text">шото шото</p>
-                        <span class="copy-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </article>
+                    <article class="text-card">
+                        <p class="gray-text">шото шото</p>
+                        <div class="black-row">
+                            <p class="black-text">шото шото</p>
+                            <span class="copy-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </article>
 
-                <article class="text-card">
-                    <p class="gray-text">шото шото</p>
-                    <div class="black-row">
-                        <p class="black-text">шото шото</p>
-                        <span class="copy-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </article>
+                    <article class="text-card">
+                        <p class="gray-text">шото шото</p>
+                        <div class="black-row">
+                            <p class="black-text">шото шото</p>
+                            <span class="copy-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </article>
 
-                <article class="text-card">
-                    <p class="gray-text">шото шото</p>
-                    <div class="black-row">
-                        <p class="black-text">шото шото</p>
-                        <span class="copy-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </article>
+                    <article class="text-card">
+                        <p class="gray-text">шото шото</p>
+                        <div class="black-row">
+                            <p class="black-text">шото шото</p>
+                            <span class="copy-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </article>
 
-                <article class="text-card">
-                    <p class="gray-text">шото шото</p>
-                    <div class="black-row">
-                        <p class="black-text">шото шото</p>
-                        <span class="copy-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24">
-                                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </article>
+                    <article class="text-card">
+                        <p class="gray-text">шото шото</p>
+                        <div class="black-row">
+                            <p class="black-text">шото шото</p>
+                            <span class="copy-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </article>
+                </div>
+
+                <textarea class="outlined-field bottom-field" placeholder="Текст под списком"></textarea>
             </div>
         </section>
     </main>
