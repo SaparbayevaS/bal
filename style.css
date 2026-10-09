@@ -6,8 +6,7 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body {
+html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -21,20 +20,34 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 58px;
+    min-height: 58px;
     display: flex;
+    align-items: center;
     background: #fff;
     border-bottom: 1px solid #eee;
     z-index: 10;
+    padding: 0 8px;
+    gap: 4px;
+}
+
+.back-button {
+    border: none;
+    background: transparent;
+    font-size: 25px;
+    color: #222;
+    padding: 6px;
+    cursor: pointer;
 }
 
 .tab {
     flex: 1;
+    min-width: 0;
+    height: 58px;
     border: none;
     background: transparent;
     color: #999;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 12px;
+    white-space: nowrap;
     cursor: pointer;
     position: relative;
 }
@@ -48,11 +61,18 @@ body {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 20%;
-    width: 60%;
+    left: 10%;
+    width: 80%;
     height: 3px;
     border-radius: 3px;
     background: #222;
+}
+
+.header-title {
+    font-size: 11px;
+    color: #888;
+    white-space: nowrap;
+    padding: 0 3px;
 }
 
 .pages {
@@ -66,14 +86,14 @@ body {
 .page {
     position: absolute;
     inset: 0;
+    padding: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
     opacity: 0;
     pointer-events: none;
-    transform: translateX(30px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transform: translateX(25px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
 .page.active {
@@ -93,11 +113,73 @@ body {
 }
 
 .photo-container img {
-    display: block;
     max-width: 100%;
     max-height: 100%;
-    width: auto;
-    height: auto;
     object-fit: contain;
+}
+
+.text-list {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0 24px;
+}
+
+.text-card {
+    padding: 15px 3px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.gray-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #a5a5a5;
+    margin-bottom: 7px;
+}
+
+.black-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.black-text {
+    flex: 1;
+    min-width: 0;
+    color: #111;
+    font-size: 16px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+.copy-button {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #fafafa;
+    color: #333;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.copy-button:active {
+    background: #eaeaea;
+}
+
+@media (max-width: 360px) {
+    .header-title {
+        display: none;
+    }
+
+    .tab {
+        font-size: 11px;
+    }
 }
 
