@@ -38,7 +38,6 @@ body {
     min-height: 44px;
 }
 
-/* Заголовок */
 .header-title {
     color: #222;
     font-size: 16px;
@@ -69,6 +68,7 @@ body {
 
 /* Общая серая рамка вокруг вкладок */
 .tab-switch {
+    position: relative;
     display: flex;
     flex: 1;
     gap: 4px;
@@ -76,10 +76,28 @@ body {
     border: 1px solid #dedede;
     border-radius: 16px;
     background: #eee;
+    touch-action: pan-y;
 }
 
-/* Вкладки */
+/* Белая подложка, которая перемещается вместе с пальцем */
+.tab-indicator {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc((100% - 12px) / 2);
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
+    pointer-events: none;
+    transition: transform 0.22s ease;
+}
+
+/* Кнопки вкладок */
 .tab {
+    position: relative;
+    z-index: 1;
     flex: 1;
     min-width: 0;
     min-height: 42px;
@@ -93,22 +111,19 @@ body {
     cursor: pointer;
 }
 
-/* Белая подложка активной вкладки */
 .tab.active {
-    border-color: #e2e2e2;
-    background: #fff;
     color: #222;
     font-weight: 600;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
 }
 
-/* Область страниц начинается под шапкой */
+/* Область страниц */
 .pages {
     position: absolute;
     top: 118px;
     bottom: 0;
     width: 100%;
     overflow: hidden;
+    touch-action: pan-y;
 }
 
 /* Страницы */
@@ -126,6 +141,7 @@ body {
 }
 
 .page.active {
+    z-index: 1;
     opacity: 1;
     pointer-events: auto;
     transform: translateX(0);
