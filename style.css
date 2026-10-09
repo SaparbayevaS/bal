@@ -47,11 +47,13 @@ body {
 .back-button {
     position: absolute;
     left: 0;
-    padding: 6px;
+    padding: 4px 8px;
     border: none;
     background: transparent;
-    color: #999;
-    font-size: 25px;
+    color: #999 !important;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1;
     cursor: pointer;
 }
 
@@ -63,7 +65,7 @@ body {
     padding-bottom: 8px;
 }
 
-/* Переключатель вкладок */
+/* Общая серая рамка вкладок */
 .tab-switch {
     position: relative;
     display: flex;
@@ -73,9 +75,9 @@ body {
     border: 1px solid #dedede;
     border-radius: 16px;
     background: #eee;
-    touch-action: pan-y;
 }
 
+/* Белая подложка вкладки */
 .tab-indicator {
     position: absolute;
     top: 4px;
@@ -111,7 +113,7 @@ body {
     font-weight: 600;
 }
 
-/* Область страниц */
+/* Область вкладок */
 .pages {
     position: absolute;
     top: 103px;
@@ -139,7 +141,7 @@ body {
     transform: translateX(0);
 }
 
-/* Первая вкладка с фото и полями */
+/* Первая вкладка: фото и два блока */
 .photo-page {
     display: flex;
     flex-direction: column;
@@ -184,56 +186,32 @@ body {
     font-size: 14px;
 }
 
-.photo-picker {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 38px;
-    padding: 0 16px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    background: #f7f7f7;
-    color: #333;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.photo-picker input {
-    display: none;
-}
-
-.photo-text-fields {
+.photo-notes {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 8px;
 }
 
-/* Поля с мягкой рамкой */
-.outlined-field {
-    display: block;
+.outlined-note {
+    display: flex;
+    align-items: center;
     width: 100%;
     min-height: 48px;
     padding: 12px;
-    resize: vertical;
     border: 1px solid #ddd;
     border-radius: 12px;
-    outline: none;
     background: #fff;
-    color: #222;
-    font: inherit;
+    color: #999;
     font-size: 14px;
 }
 
-.outlined-field:focus {
-    border-color: #aaa;
+.bottom-note {
+    flex-shrink: 0;
+    margin-bottom: 4px;
 }
 
-.outlined-field::placeholder {
-    color: #999;
-}
-
-/* Вторая вкладка со списком */
+/* Вторая вкладка */
 .text-page {
     display: flex;
     flex-direction: column;
@@ -251,7 +229,7 @@ body {
     padding: 4px 0;
 }
 
-/* Карточки без разделительных линий */
+/* Карточки без линий между ними */
 .text-card {
     padding: 15px 3px;
 }
@@ -302,13 +280,6 @@ body {
     stroke-linejoin: round;
 }
 
-.bottom-field {
-    flex-shrink: 0;
-    min-height: 48px;
-    margin-bottom: 4px;
-}
-
-/* Маленькие экраны */
 @media (max-width: 360px) {
     .header-title {
         font-size: 15px;
@@ -320,7 +291,6 @@ body {
     }
 
     .back-button {
-        padding: 4px;
-        font-size: 22px;
+        font-size: 29px;
     }
 }

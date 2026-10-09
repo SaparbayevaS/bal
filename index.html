@@ -13,7 +13,7 @@
 <body>
     <header class="tabs">
         <div class="title-row">
-            <button class="back-button" id="backButton" aria-label="Назад">←</button>
+            <button class="back-button" id="backButton" aria-label="Назад">‹</button>
             <div class="header-title">Кое что</div>
         </div>
 
@@ -31,18 +31,16 @@
         <section class="page active">
             <div class="photo-page">
                 <div class="photo-frame" id="photoFrame">
-                    <img src="" alt="Выбранное фото" id="photo1">
-                    <span class="photo-hint" id="photoHint">Выбери фото из галереи</span>
+                    <!-- Положи фото рядом с index.html и укажи его имя в src -->
+                    <img src="my-photo.jpg" alt="Фото" id="photo1">
+                    <span class="photo-hint" id="photoHint">
+                        Здесь будет твоё фото
+                    </span>
                 </div>
 
-                <label class="photo-picker">
-                    Выбрать фото
-                    <input type="file" id="photoInput" accept="image/*">
-                </label>
-
-                <div class="photo-text-fields">
-                    <textarea class="outlined-field" placeholder="Текст под фото"></textarea>
-                    <textarea class="outlined-field" placeholder="Ещё текст под фото"></textarea>
+                <div class="photo-notes">
+                    <div class="outlined-note">Тут позже появится твой текст</div>
+                    <div class="outlined-note">Тут позже появится ещё текст</div>
                 </div>
             </div>
         </section>
@@ -130,7 +128,9 @@
                     </article>
                 </div>
 
-                <textarea class="outlined-field bottom-field" placeholder="Текст под списком"></textarea>
+                <div class="outlined-note bottom-note">
+                    Тут позже появится текст под списком
+                </div>
             </div>
         </section>
     </main>
