@@ -5,28 +5,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>My App</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Кое что">
+    <title>Кое что</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="tabs">
-        <button class="tab active" data-page="0">Бла бла бла 1</button>
-        <button class="tab" data-page="1">Бла бла бла 2</button>
+        <button class="back-button" id="backButton" aria-label="Назад">←</button>
+
+        <button class="tab active" data-page="0">
+            Бла бла бла 1
+        </button>
+
+        <button class="tab" data-page="1">
+            Бла бла бла 2
+        </button>
+
+        <div class="header-title">Кое что</div>
     </header>
 
     <main class="pages">
+
         <section class="page active">
             <div class="photo-container">
-                <img src="" alt="Твоя фотография" id="photo1">
+                <img src="" alt="" id="photo1">
             </div>
         </section>
 
         <section class="page">
-            <div class="photo-container">
-                <img src="" alt="Вторая фотография" id="photo2">
+            <div class="text-list">
+
+                <article class="text-card">
+                    <p class="gray-text">шото шото</p>
+                    <div class="black-row">
+                        <p class="black-text">шото шото</p>
+                        <button class="copy-button" aria-label="Копировать">▢</button>
+                    </div>
+                </article>
+
+                <article class="text-card">
+                    <p class="gray-text">шото шото</p>
+                    <div class="black-row">
+                        <p class="black-text">шото шото</p>
+                        <button class="copy-button" aria-label="Копировать">▢</button>
+                    </div>
+                </article>
+
+                <article class="text-card">
+                    <p class="gray-text">шото шото</p>
+                    <div class="black-row">
+                        <p class="black-text">шото шото</p>
+                        <button class="copy-button" aria-label="Копировать">▢</button>
+                    </div>
+                </article>
+
+                <article class="text-card">
+                    <p class="gray-text">шото шото</p>
+                    <div class="black-row">
+                        <p class="black-text">шото шото</p>
+                        <button class="copy-button" aria-label="Копировать">▢</button>
+                    </div>
+                </article>
+
+                <article class="text-card">
+                    <p class="gray-text">шото шото</p>
+                    <div class="black-row">
+                        <p class="black-text">шото шото</p>
+                        <button class="copy-button" aria-label="Копировать">▢</button>
+                    </div>
+                </article>
+
+                <article class="text-card">
+                    <p class="gray-text">шото шото</p>
+                    <div class="black-row">
+                        <p class="black-text">шото шото</p>
+                        <button class="copy-button" aria-label="Копировать">▢</button>
+                    </div>
+                </article>
+
             </div>
         </section>
+
     </main>
 
     <script src="script.js"></script>
