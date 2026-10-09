@@ -29,36 +29,42 @@ body {
     border-bottom: 1px solid #eee;
 }
 
-/* Заголовок над вкладками */
+/* Строка со стрелкой и заголовком */
+.title-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+}
+
+/* Заголовок */
 .header-title {
-    width: 100%;
-    padding: 12px 0;
     color: #222;
     font-size: 16px;
     font-weight: 600;
     text-align: center;
-    white-space: nowrap;
 }
 
-/* Строка с кнопкой назад и переключателем */
-.tabs-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    min-height: 58px;
-    padding-bottom: 8px;
-}
-
-/* Кнопка «Назад» */
+/* Стрелка слева от заголовка */
 .back-button {
-    flex-shrink: 0;
+    position: absolute;
+    left: 0;
     padding: 6px;
     border: none;
     background: transparent;
     color: #222;
     font-size: 25px;
     cursor: pointer;
+}
+
+/* Строка с переключателем вкладок */
+.tabs-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 58px;
+    padding-bottom: 8px;
 }
 
 /* Общая серая рамка вокруг вкладок */
@@ -72,7 +78,7 @@ body {
     background: #eee;
 }
 
-/* Неактивные вкладки */
+/* Вкладки */
 .tab {
     flex: 1;
     min-width: 0;
@@ -87,7 +93,7 @@ body {
     cursor: pointer;
 }
 
-/* Активная вкладка */
+/* Белая подложка активной вкладки */
 .tab.active {
     border-color: #e2e2e2;
     background: #fff;
@@ -96,7 +102,7 @@ body {
     box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
 }
 
-/* Контент страницы начинается под шапкой */
+/* Область страниц начинается под шапкой */
 .pages {
     position: absolute;
     top: 118px;
@@ -166,7 +172,7 @@ body {
     line-height: 1.5;
 }
 
-/* Строка с основным текстом и кнопкой */
+/* Чёрный текст и кнопка копирования */
 .black-row {
     display: flex;
     align-items: center;
