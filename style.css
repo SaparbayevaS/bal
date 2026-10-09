@@ -1,4 +1,3 @@
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,7 +5,8 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -15,55 +15,51 @@ html, body {
     color: #222;
 }
 
-/* Верхняя шапка */
+/* Шапка: заголовок сверху, вкладки под ним */
 .tabs {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    padding: 0 8px;
     background: #fff;
     border-bottom: 1px solid #eee;
-    z-index: 10;
-    padding: 0 8px;
-    gap: 0;
 }
 
-/* Название сверху */
 .header-title {
     width: 100%;
-    text-align: center;
+    padding: 12px 0;
+    color: #222;
     font-size: 16px;
     font-weight: 600;
-    color: #222;
-    padding: 12px 0;
+    text-align: center;
     white-space: nowrap;
 }
 
-/* Строка с вкладками */
 .tabs-row {
-    width: 100%;
-    min-height: 58px;
     display: flex;
     align-items: center;
     gap: 4px;
+    width: 100%;
+    min-height: 58px;
 }
 
-/* Кнопка назад */
 .back-button {
     flex-shrink: 0;
+    padding: 6px;
     border: none;
     background: transparent;
-    font-size: 25px;
     color: #222;
-    padding: 6px;
+    font-size: 25px;
     cursor: pointer;
 }
 
-/* Вкладки */
 .tab {
+    position: relative;
     flex: 1;
     min-width: 0;
     height: 58px;
@@ -73,7 +69,6 @@ html, body {
     font-size: 12px;
     white-space: nowrap;
     cursor: pointer;
-    position: relative;
 }
 
 .tab.active {
@@ -81,35 +76,33 @@ html, body {
     font-weight: 700;
 }
 
-/* Линия активной вкладки */
 .tab.active::after {
-    content: "";
     position: absolute;
+    right: 10%;
     bottom: 0;
     left: 10%;
-    width: 80%;
     height: 3px;
     border-radius: 3px;
     background: #222;
+    content: "";
 }
 
-/* Область страниц */
+/* Контент начинается под шапкой */
 .pages {
     position: absolute;
-    top: 99px;
+    top: 102px;
     bottom: 0;
     width: 100%;
     overflow: hidden;
 }
 
-/* Страницы */
 .page {
     position: absolute;
     inset: 0;
-    padding: 14px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding: 14px;
     opacity: 0;
     pointer-events: none;
     transform: translateX(25px);
@@ -122,13 +115,12 @@ html, body {
     transform: translateX(0);
 }
 
-/* Фото */
 .photo-container {
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     border-radius: 12px;
 }
@@ -139,7 +131,6 @@ html, body {
     object-fit: contain;
 }
 
-/* Список текстов */
 .text-list {
     width: 100%;
     height: 100%;
@@ -149,21 +140,18 @@ html, body {
     padding: 4px 0 24px;
 }
 
-/* Карточки */
 .text-card {
     padding: 15px 3px;
     border-bottom: 1px solid #f0f0f0;
 }
 
-/* Серый текст */
 .gray-text {
+    margin-bottom: 7px;
+    color: #a5a5a5;
     font-size: 13px;
     line-height: 1.5;
-    color: #a5a5a5;
-    margin-bottom: 7px;
 }
 
-/* Строка с чёрным текстом и кнопкой */
 .black-row {
     display: flex;
     align-items: center;
@@ -171,7 +159,6 @@ html, body {
     gap: 12px;
 }
 
-/* Основной текст */
 .black-text {
     flex: 1;
     min-width: 0;
@@ -183,7 +170,6 @@ html, body {
     -webkit-user-select: text;
 }
 
-/* Кнопка копирования */
 .copy-button {
     flex-shrink: 0;
     width: 36px;
@@ -200,7 +186,6 @@ html, body {
     background: #eaeaea;
 }
 
-/* Маленькие экраны */
 @media (max-width: 360px) {
     .header-title {
         font-size: 15px;
@@ -211,8 +196,7 @@ html, body {
     }
 
     .back-button {
-        font-size: 22px;
         padding: 4px;
+        font-size: 22px;
     }
 }
-
