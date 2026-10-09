@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -15,7 +16,7 @@ body {
     color: #222;
 }
 
-/* Шапка */
+/* Верхняя шапка */
 .tabs {
     position: fixed;
     top: 0;
@@ -26,9 +27,10 @@ body {
     width: 100%;
     padding: 0 12px;
     background: #fff;
-    border-bottom: 1px solid #eee;
+    border-bottom: none;
 }
 
+/* Строка со стрелкой и заголовком */
 .title-row {
     position: relative;
     display: flex;
@@ -44,6 +46,7 @@ body {
     text-align: center;
 }
 
+/* Серая стрелка слева от заголовка */
 .back-button {
     position: absolute;
     left: 0;
@@ -57,50 +60,52 @@ body {
     cursor: pointer;
 }
 
+/* Строка с переключателем вкладок */
 .tabs-row {
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: 58px;
-    padding-bottom: 8px;
+    min-height: 42px;
+    padding-bottom: 4px;
 }
 
-/* Общая серая рамка вкладок */
+/* Общая рамка вокруг вкладок */
 .tab-switch {
     position: relative;
     display: flex;
     flex: 1;
     gap: 4px;
-    padding: 4px;
+    padding: 1px 4px;
     border: 1px solid #dedede;
-    border-radius: 16px;
+    border-radius: 14px;
     background: #eee;
 }
 
-/* Белая подложка вкладки */
+/* Белая подложка выбранной вкладки */
 .tab-indicator {
     position: absolute;
-    top: 4px;
-    bottom: 4px;
+    top: 1px;
+    bottom: 1px;
     left: 0;
     width: 0;
     border: 1px solid #e2e2e2;
-    border-radius: 12px;
+    border-radius: 11px;
     background: #fff;
     box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
     pointer-events: none;
     transition: transform 0.22s ease;
 }
 
+/* Кнопки вкладок */
 .tab {
     position: relative;
     z-index: 1;
     flex: 1;
     min-width: 0;
-    min-height: 42px;
+    min-height: 36px;
     padding: 0 8px;
     border: 1px solid transparent;
-    border-radius: 12px;
+    border-radius: 11px;
     background: transparent;
     color: #777;
     font-size: 13px;
@@ -113,10 +118,10 @@ body {
     font-weight: 600;
 }
 
-/* Область вкладок */
+/* Область страниц */
 .pages {
     position: absolute;
-    top: 103px;
+    top: 86px;
     bottom: 0;
     width: 100%;
     overflow: hidden;
@@ -141,7 +146,7 @@ body {
     transform: translateX(0);
 }
 
-/* Первая вкладка: фото и два блока */
+/* Первая вкладка: фото и два блока под ним */
 .photo-page {
     display: flex;
     flex-direction: column;
@@ -151,6 +156,7 @@ body {
     gap: 10px;
 }
 
+/* Синяя область для фото */
 .photo-frame {
     position: relative;
     display: flex;
@@ -160,9 +166,9 @@ body {
     width: 100%;
     min-height: 100px;
     overflow: hidden;
-    border: 1px solid #eee;
+    border: 2px solid #3478f6;
     border-radius: 12px;
-    background: #fafafa;
+    background: #3478f6;
     touch-action: pan-y;
 }
 
@@ -182,10 +188,11 @@ body {
 }
 
 .photo-hint {
-    color: #999;
+    color: #fff;
     font-size: 14px;
 }
 
+/* Два блока под фото */
 .photo-notes {
     display: flex;
     flex-direction: column;
@@ -193,28 +200,25 @@ body {
     gap: 8px;
 }
 
+/* Блоки с синей рамкой и белой заливкой */
 .outlined-note {
     display: flex;
     align-items: center;
     width: 100%;
     min-height: 48px;
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 2px solid #3478f6;
     border-radius: 12px;
     background: #fff;
-    color: #999;
+    color: #3478f6;
     font-size: 14px;
 }
 
-.bottom-note {
-    flex-shrink: 0;
-    margin-bottom: 4px;
-}
-
-/* Вторая вкладка */
+/* Вторая вкладка со списком */
 .text-page {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     width: 100%;
     height: 100%;
     gap: 10px;
@@ -229,7 +233,7 @@ body {
     padding: 4px 0;
 }
 
-/* Карточки без линий между ними */
+/* Карточки без линий-разделителей */
 .text-card {
     padding: 15px 3px;
 }
@@ -280,6 +284,14 @@ body {
     stroke-linejoin: round;
 }
 
+/* Один блок под списком */
+.bottom-note {
+    flex-shrink: 0;
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+/* Маленькие экраны */
 @media (max-width: 360px) {
     .header-title {
         font-size: 15px;
