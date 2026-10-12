@@ -1,4 +1,3 @@
-
 const tabs = document.querySelectorAll(".tab");
 const pages = document.querySelectorAll(".page");
 const backButton = document.querySelector("#backButton");
@@ -14,11 +13,13 @@ let currentPage = 0;
 let startX = 0;
 let startY = 0;
 let dragX = 0;
+let startWasInPages = false;
+let canPullDown = true;
+let canPullUp = true;
 
 let isDragging = false;
 let isHorizontalSwipe = false;
 let isVerticalPull = false;
-let canPullDown = true;
 
 let photoScale = 1;
 let pinchStartDistance = 0;
@@ -70,25 +71,43 @@ backButton.addEventListener("click", () => {
     showPage(Math.max(0, currentPage - 1));
 });
 
-/* Начало жеста на странице */
-pagesContainer.addEventListener("touchstart", (event) => {
+/*
+ * Начало жеста.
+ * Вертикальное вытягивание можно начать от шапки или от страницы.
+ */
+document.addEventListener("touchstart", (event) => {
     if (event.touches.length !== 1) return;
+
+    const target = event.target;
+    const startedInTabs = target.closest(".tabs");
+    const startedInPages = target.closest(".pages");
+
+    if (!startedInTabs && !startedInPages) return;
 
     startX = event.touches[0].clientX;
     startY = event.touches[0].clientY;
     dragX = 0;
 
+    startWasInPages = Boolean(startedInPages);
     isDragging = true;
     isHorizontalSwipe = false;
     isVerticalPull = false;
 
-    // Если список уже прокручен, оставляем жест браузерной прокрутке
-    const textList = event.target.closest(".text-list");
-    canPullDown = !textList || textList.scrollTop <= 0;
+    const textList = target.closest(".text-list");
+
+    if (textList) {
+        canPullDown = textList.scrollTop <= 0;
+        canPullUp =
+            textList.scrollTop + textList.clientHeight >=
+            textList.scrollHeight - 1;
+    } else {
+        canPullDown = true;
+        canPullUp = true;
+    }
 }, { passive: true });
 
-/* Движение страницы за пальцем */
-pagesContainer.addEventListener("touchmove", (event) => {
+/* Движение за пальцем */
+document.addEventListener("touchmove", (event) => {
     if (!isDragging || event.touches.length !== 1) return;
 
     const fingerX = event.touches[0].clientX;
@@ -100,23 +119,39 @@ pagesContainer.addEventListener("touchmove", (event) => {
         if (Math.abs(diffX) < 8 && Math.abs(diffY) < 8) return;
 
         if (Math.abs(diffX) > Math.abs(diffY)) {
+            // Горизонтальный свайп работает только внутри области страниц
+            if (!startWasInPages) {
+                isDragging = false;
+                return;
+            }
+
             isHorizontalSwipe = true;
-        } else if (diffY > 0 && canPullDown) {
-            isVerticalPull = true;
         } else {
-            // Вертикальную прокрутку списка оставляем браузеру
-            isDragging = false;
-            return;
+            const pullingDown = diffY > 0;
+            const canPullInThisDirection = pullingDown
+                ? canPullDown
+                : canPullUp;
+
+            if (!canPullInThisDirection) {
+                // Обычную прокрутку списка оставляем браузеру
+                isDragging = false;
+                return;
+            }
+
+            isVerticalPull = true;
         }
     }
 
     if (isVerticalPull) {
         event.preventDefault();
 
-        // Ограничиваем вытягивание и добавляем лёгкое сопротивление
-        const pullDistance = Math.min(diffY * 0.55, 140);
-        const page = pages[currentPage];
+        // Вниз — от шапки; вверх — от нижнего блока
+        const pullDistance = Math.max(
+            -140,
+            Math.min(diffY * 0.55, 140)
+        );
 
+        const page = pages[currentPage];
         page.style.transition = "none";
         page.style.transform = `translate3d(0, ${pullDistance}px, 0)`;
         return;
@@ -130,10 +165,8 @@ pagesContainer.addEventListener("touchmove", (event) => {
         ? currentPage + 1
         : currentPage - 1;
 
-    // За край первой или последней вкладки страница не тянется
-    if (nextPage < 0 || nextPage >= pages.length) {
-        return;
-    }
+    // Не растягиваем пустое пространство за первой и последней вкладками
+    if (nextPage < 0 || nextPage >= pages.length) return;
 
     dragX = diffX;
 
@@ -153,7 +186,7 @@ pagesContainer.addEventListener("touchmove", (event) => {
         }
     });
 
-    // Подложка движется пропорционально движению страницы
+    // Белая подложка проходит расстояние между вкладками
     const tabDistance = Math.abs(
         tabs[1].getBoundingClientRect().left -
         tabs[0].getBoundingClientRect().left
@@ -165,17 +198,19 @@ pagesContainer.addEventListener("touchmove", (event) => {
     positionIndicator(currentPage, indicatorOffset, false);
 }, { passive: false });
 
-/* Завершение жеста */
+/* Возвращаем страницу или завершаем переход */
 function finishGesture() {
     if (!isDragging) return;
 
     isDragging = false;
 
     if (isVerticalPull) {
-        // Вертикально вытянутая страница возвращается на место
         const page = pages[currentPage];
+
+        // После отпускания страница возвращается на место
         page.style.transition = "";
         page.style.transform = "";
+
         isVerticalPull = false;
         return;
     }
@@ -197,8 +232,8 @@ function finishGesture() {
     isHorizontalSwipe = false;
 }
 
-pagesContainer.addEventListener("touchend", finishGesture);
-pagesContainer.addEventListener("touchcancel", finishGesture);
+document.addEventListener("touchend", finishGesture);
+document.addEventListener("touchcancel", finishGesture);
 
 /* Показываем фото, если файл найден */
 function showPhoto() {
@@ -219,6 +254,7 @@ showPhoto();
 function touchDistance(touches) {
     const dx = touches[0].clientX - touches[1].clientX;
     const dy = touches[0].clientY - touches[1].clientY;
+
     return Math.hypot(dx, dy);
 }
 
@@ -271,7 +307,7 @@ photoFrame.addEventListener("touchcancel", finishPinch, {
     capture: true
 });
 
-/* Двойное нажатие увеличивает фото или возвращает исходный размер */
+/* Двойное нажатие увеличивает фото или возвращает его к обычному размеру */
 photoFrame.addEventListener("click", () => {
     if (!photo.classList.contains("visible")) return;
 
@@ -285,7 +321,7 @@ photoFrame.addEventListener("click", () => {
     lastPhotoTap = now;
 });
 
-/* Переставляем подложку при изменении размера окна */
+/* Подгоняем подложку при изменении размера окна */
 window.addEventListener("resize", () => {
     positionIndicator(currentPage);
 });
