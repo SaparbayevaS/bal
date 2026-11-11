@@ -4,6 +4,7 @@ const backButton = document.querySelector("#backButton");
 const pagesContainer = document.querySelector(".pages");
 const tabSwitch = document.querySelector(".tab-switch");
 const tabIndicator = document.querySelector(".tab-indicator");
+const tabsRow = document.querySelector(".tabs-row");
 const photo = document.querySelector("#photo1");
 const photoHint = document.querySelector("#photoHint");
 const photoFrame = document.querySelector("#photoFrame");
@@ -20,12 +21,18 @@ let canPullUp = true;
 let isDragging = false;
 let isHorizontalSwipe = false;
 let isVerticalPull = false;
+let isPullingDown = false;
 
 let photoScale = 1;
 let pinchStartDistance = 0;
 let pinchStartScale = 1;
 let isPinching = false;
 let lastPhotoTap = 0;
+let returnTimer = null;
+
+const returnDuration = 900;
+const returnEasing = "cubic-bezier(0.16, 1, 0.3, 1)";
+const photoFirstPullDistance = 55;
 
 /* Положение белой подложки вкладки */
 function positionIndicator(index, dragOffset = 0, animate = true) {
@@ -43,11 +50,61 @@ function positionIndicator(index, dragOffset = 0, animate = true) {
     tabIndicator.style.transform = `translateX(${x}px)`;
 }
 
+/* Сбрасываем временные сдвиги */
+function resetVerticalPull() {
+    pagesContainer.style.transition = "";
+    pagesContainer.style.transform = "";
+
+    pages.forEach((page) => {
+        page.style.transition = "";
+        page.style.transform = "";
+
+        page.querySelectorAll(".photo-frame, .text-list").forEach((item) => {
+            item.style.transition = "";
+            item.style.transform = "";
+        });
+    });
+
+    tabsRow.style.transition = "";
+    tabsRow.style.transform = "";
+}
+
+/* Плавно возвращаем элементы на место после жеста */
+function animateVerticalReturn() {
+    if (returnTimer) {
+        clearTimeout(returnTimer);
+        returnTimer = null;
+    }
+
+    const elementsToReturn = [
+        pagesContainer,
+        tabsRow,
+        ...document.querySelectorAll(".page .photo-frame, .page .text-list")
+    ];
+
+    elementsToReturn.forEach((element) => {
+        element.style.transition =
+            `transform ${returnDuration}ms ${returnEasing}`;
+        element.style.transform = "translate3d(0, 0, 0)";
+    });
+
+    returnTimer = setTimeout(() => {
+        resetVerticalPull();
+        returnTimer = null;
+    }, returnDuration + 40);
+}
+
 /* Переключение вкладки */
 function showPage(index) {
     if (index < 0 || index >= pages.length) return;
 
+    if (returnTimer) {
+        clearTimeout(returnTimer);
+        returnTimer = null;
+    }
+
     currentPage = index;
+    resetVerticalPull();
 
     tabs.forEach((tab, i) => {
         tab.classList.toggle("active", i === index);
@@ -71,10 +128,7 @@ backButton.addEventListener("click", () => {
     showPage(Math.max(0, currentPage - 1));
 });
 
-/*
- * Начало жеста.
- * Вертикальное вытягивание можно начать от шапки или от страницы.
- */
+/* Начало жеста */
 document.addEventListener("touchstart", (event) => {
     if (event.touches.length !== 1) return;
 
@@ -84,6 +138,12 @@ document.addEventListener("touchstart", (event) => {
 
     if (!startedInTabs && !startedInPages) return;
 
+    if (returnTimer) {
+        clearTimeout(returnTimer);
+        returnTimer = null;
+        resetVerticalPull();
+    }
+
     startX = event.touches[0].clientX;
     startY = event.touches[0].clientY;
     dragX = 0;
@@ -92,6 +152,7 @@ document.addEventListener("touchstart", (event) => {
     isDragging = true;
     isHorizontalSwipe = false;
     isVerticalPull = false;
+    isPullingDown = false;
 
     const textList = target.closest(".text-list");
 
@@ -119,7 +180,6 @@ document.addEventListener("touchmove", (event) => {
         if (Math.abs(diffX) < 8 && Math.abs(diffY) < 8) return;
 
         if (Math.abs(diffX) > Math.abs(diffY)) {
-            // Горизонтальный свайп работает только внутри области страниц
             if (!startWasInPages) {
                 isDragging = false;
                 return;
@@ -133,27 +193,93 @@ document.addEventListener("touchmove", (event) => {
                 : canPullUp;
 
             if (!canPullInThisDirection) {
-                // Обычную прокрутку списка оставляем браузеру
                 isDragging = false;
                 return;
             }
 
             isVerticalPull = true;
+            isPullingDown = pullingDown;
         }
     }
 
     if (isVerticalPull) {
         event.preventDefault();
 
-        // Вниз — от шапки; вверх — от нижнего блока
         const pullDistance = Math.max(
             -140,
             Math.min(diffY * 0.55, 140)
         );
 
         const page = pages[currentPage];
-        page.style.transition = "none";
-        page.style.transform = `translate3d(0, ${pullDistance}px, 0)`;
+
+        if (isPullingDown) {
+            /* При тяге вниз фото или список двигаются, нижние блоки остаются */
+            const downDistance = Math.max(0, pullDistance);
+
+            pagesContainer.style.transition = "none";
+            pagesContainer.style.transform = "";
+
+            page.style.transition = "none";
+            page.style.transform = "";
+
+            const contentToMove = page.querySelector(
+                ".photo-frame, .text-list"
+            );
+
+            if (contentToMove) {
+                contentToMove.style.transition = "none";
+                contentToMove.style.transform =
+                    `translate3d(0, ${downDistance}px, 0)`;
+            }
+
+            tabsRow.style.transition = "none";
+            tabsRow.style.transform =
+                `translate3d(0, ${downDistance}px, 0)`;
+        } else if (currentPage === 0) {
+            /*
+             * На первой странице сначала вверх уходит только фото.
+             * Когда оно прошло 55 пикселей, начинает двигаться страница.
+             */
+            const totalUpDistance = Math.min(
+                Math.abs(diffY) * 0.55,
+                140
+            );
+
+            const photoDistance = Math.min(
+                totalUpDistance,
+                photoFirstPullDistance
+            );
+
+            const pageDistance = Math.max(
+                0,
+                totalUpDistance - photoFirstPullDistance
+            );
+
+            photoFrame.style.transition = "none";
+            photoFrame.style.transform =
+                `translate3d(0, ${-photoDistance}px, 0)`;
+
+            pagesContainer.style.transition = "none";
+            pagesContainer.style.transform =
+                `translate3d(0, ${-pageDistance}px, 0)`;
+
+            tabsRow.style.transition = "none";
+            tabsRow.style.transform = "";
+        } else {
+            /* На второй странице вверх двигается вся страница */
+            page.querySelectorAll(".photo-frame, .text-list").forEach((item) => {
+                item.style.transition = "none";
+                item.style.transform = "";
+            });
+
+            tabsRow.style.transition = "none";
+            tabsRow.style.transform = "";
+
+            pagesContainer.style.transition = "none";
+            pagesContainer.style.transform =
+                `translate3d(0, ${pullDistance}px, 0)`;
+        }
+
         return;
     }
 
@@ -165,7 +291,6 @@ document.addEventListener("touchmove", (event) => {
         ? currentPage + 1
         : currentPage - 1;
 
-    // Не растягиваем пустое пространство за первой и последней вкладками
     if (nextPage < 0 || nextPage >= pages.length) return;
 
     dragX = diffX;
@@ -186,32 +311,30 @@ document.addEventListener("touchmove", (event) => {
         }
     });
 
-    // Белая подложка проходит расстояние между вкладками
-    const tabDistance = Math.abs(
-        tabs[1].getBoundingClientRect().left -
-        tabs[0].getBoundingClientRect().left
-    );
+    /* Белая подложка проходит расстояние между вкладками */
+    if (tabs.length >= 2) {
+        const tabDistance = Math.abs(
+            tabs[1].getBoundingClientRect().left -
+            tabs[0].getBoundingClientRect().left
+        );
 
-    const pageWidth = pagesContainer.clientWidth || 1;
-    const indicatorOffset = (-diffX / pageWidth) * tabDistance;
+        const pageWidth = pagesContainer.clientWidth || 1;
+        const indicatorOffset = (-diffX / pageWidth) * tabDistance;
 
-    positionIndicator(currentPage, indicatorOffset, false);
+        positionIndicator(currentPage, indicatorOffset, false);
+    }
 }, { passive: false });
 
-/* Возвращаем страницу или завершаем переход */
+/* Завершение жеста */
 function finishGesture() {
     if (!isDragging) return;
 
     isDragging = false;
 
     if (isVerticalPull) {
-        const page = pages[currentPage];
-
-        // После отпускания страница возвращается на место
-        page.style.transition = "";
-        page.style.transform = "";
-
+        animateVerticalReturn();
         isVerticalPull = false;
+        isPullingDown = false;
         return;
     }
 
@@ -307,7 +430,7 @@ photoFrame.addEventListener("touchcancel", finishPinch, {
     capture: true
 });
 
-/* Двойное нажатие увеличивает фото или возвращает его к обычному размеру */
+/* Двойное нажатие увеличивает фото или возвращает обычный размер */
 photoFrame.addEventListener("click", () => {
     if (!photo.classList.contains("visible")) return;
 

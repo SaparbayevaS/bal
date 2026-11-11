@@ -34,13 +34,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
+    min-height: 35px;
 }
 
 .header-title {
     color: #222;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 760;
     text-align: center;
 }
 
@@ -63,8 +63,10 @@ body {
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: 42px;
+    min-height: 80px;
     padding-bottom: 4px;
+    background: #fff;
+    will-change: transform;
 }
 
 /* Общая рамка вокруг вкладок */
@@ -73,7 +75,7 @@ body {
     display: flex;
     flex: 1;
     gap: 4px;
-    padding: 1px 4px;
+    padding: 1px;
     border: 1px solid #dedede;
     border-radius: 14px;
     background: #eee;
@@ -82,8 +84,8 @@ body {
 /* Белая подложка активной вкладки */
 .tab-indicator {
     position: absolute;
-    top: 1px;
-    bottom: 1px;
+    top: 0;
+    bottom: 0;
     left: 0;
     width: 0;
     border: 1px solid #e2e2e2;
@@ -100,30 +102,32 @@ body {
     z-index: 1;
     flex: 1;
     min-width: 0;
-    min-height: 36px;
+    min-height: 33px;
     padding: 0 8px;
     border: 1px solid transparent;
     border-radius: 11px;
     background: transparent;
     color: #777;
-    font-size: 13px;
+    font-size: 14px;
     white-space: nowrap;
     cursor: pointer;
 }
 
 .tab.active {
     color: #222;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* Область страниц */
 .pages {
     position: absolute;
-    top: 86px;
+    z-index: 1;
+    top: 115px;
     bottom: 0;
     width: 100%;
     overflow: hidden;
     touch-action: pan-y;
+    will-change: transform;
 }
 
 .page {
@@ -144,7 +148,7 @@ body {
     transform: translateX(0);
 }
 
-/* Первая вкладка: фото и текстовые блоки */
+/* Первая вкладка */
 .photo-page {
     display: flex;
     flex-direction: column;
@@ -154,9 +158,10 @@ body {
     gap: 10px;
 }
 
-/* Фото оставлено со светлым исходным оформлением */
+/* Фото */
 .photo-frame {
     position: relative;
+    z-index: 1;
     display: flex;
     flex: 1;
     align-items: center;
@@ -170,7 +175,7 @@ body {
     touch-action: pan-y;
 }
 
-.photo-frame img {
+.photo-frame img:not(.qr-badge):not(.share-photo) {
     display: none;
     max-width: 100%;
     max-height: 100%;
@@ -190,30 +195,92 @@ body {
     font-size: 14px;
 }
 
-/* Два блока под фото */
+/* Нижние блоки и белый лист */
 .photo-notes {
+    position: relative;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 8px;
     margin-bottom: 4px;
+    background: #fff;
 }
 
-/* Синие рамки, белая заливка, синий текст */
+/* Белый лист продолжается вверх до серой линии */
+.photo-notes::after {
+    content: "";
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    z-index: 0;
+    width: 100vw;
+    height: 17px;
+    transform: translateX(-50%);
+    background: #fff;
+}
+
+/* Серая линия остаётся на прежнем месте */
+.photo-notes::before {
+    content: "";
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    z-index: 1;
+    width: 100vw;
+    height: 1px;
+    transform: translateX(-50%);
+    background: #dedede;
+}
+
+/* Блоки с текстом и картинкой */
 .outlined-note {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 8px;
     width: 100%;
     min-height: 48px;
-    padding: 12px;
-    border: 2px solid #3478f6;
+    padding: 10px 12px;
+    border: 2px solid #0171c67e;
     border-radius: 12px;
     background: #fff;
-    color: #3478f6;
-    font-size: 14px;
+    color: #0171c6;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
 }
 
-/* Вторая вкладка со списком и нижним блоком */
+/* Текст рядом с картинкой */
+.outlined-note > span {
+    flex: 0 1 auto;
+    width: auto;
+    padding: 0;
+    text-align: center;
+}
+
+/* Верхний блок: синий фон и белый текст */
+.outlined-note.qr-note {
+    border-color: #0171c6;
+    background: #0171c6;
+    color: #fff;
+}
+
+/* QR-картинка и share.jpg */
+.qr-badge,
+.share-photo {
+    position: static;
+    display: block;
+    flex: 0 0 28px;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Вторая вкладка со списком */
 .text-page {
     display: flex;
     flex-direction: column;
@@ -221,9 +288,12 @@ body {
     width: 100%;
     height: 100%;
     gap: 10px;
+    font-family: Menlo, monospace;
 }
 
 .text-list {
+    position: relative;
+    z-index: 1;
     flex: 1;
     min-height: 0;
     overflow-y: auto;
@@ -234,13 +304,13 @@ body {
 
 /* Карточки без разделительных линий */
 .text-card {
-    padding: 15px 3px;
+    padding: 5px 3px;
 }
 
 .gray-text {
-    margin-bottom: 7px;
+    margin-bottom: -3px;
     color: #a5a5a5;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.5;
 }
 
@@ -255,39 +325,29 @@ body {
     flex: 1;
     min-width: 0;
     color: #111;
-    font-size: 16px;
+    font-size: 15.5px;
     line-height: 1.45;
     overflow-wrap: anywhere;
     user-select: text;
     -webkit-user-select: text;
 }
 
-/* Декоративный значок из двух квадратиков */
-.copy-icon {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    color: #777;
-}
-
-.copy-icon svg {
-    width: 22px;
-    height: 22px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-/* Нижний блок на уровне второго блока под фото */
+/* Нижний блок второй страницы без серой линии */
 .bottom-note {
+    position: relative;
+    z-index: 3;
     flex-shrink: 0;
     width: 100%;
     margin-bottom: 4px;
+    background: #fff;
+}
+
+/* Плавное возвращение после жеста */
+.pages,
+.tabs-row,
+.photo-notes,
+.text-list {
+    transition: transform 0.3s ease;
 }
 
 /* Маленькие экраны */
