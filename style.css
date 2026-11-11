@@ -365,3 +365,8 @@ body {
         font-size: 29px;
     }
 }
+
+.photo-notes,
+.bottom-note {
+    margin-bottom: 30px;
+}
